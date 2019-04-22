@@ -1,0 +1,20 @@
+# Prerequisites
+.vscode
+
+# Object files
+*.py
+*.o
+*.a
+
+# Executables
+myftp
+a.out
+
+# Miscellaneous
+test_ftp.sh
+
+# Emacs
+*~
+\#*\#
+.\#*
+
