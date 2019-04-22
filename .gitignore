@@ -7,11 +7,12 @@
 *.a
 
 # Executables
-myftp
+client
 a.out
 
 # Miscellaneous
 test_ftp.sh
+src/commentraire
 
 # Emacs
 *~

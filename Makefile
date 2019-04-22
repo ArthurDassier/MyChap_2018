@@ -15,8 +15,8 @@ CFLAGS	+=	-I./include
 
 NAME	=	client
 
-SRCS	=	src/main.c	\
-			src/init.c	\
+SRCS	=	src/main.c		\
+			src/client.c	\
 
 OBJS	=	$(SRCS:.c=.o)
 
