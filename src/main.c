@@ -50,7 +50,7 @@ static int handle_argument(infos_t *infos_struct, int ac, char **av)
     char            *port = NULL;
     int             oc = 0;
 
-    for (int i = 0; i < 3; ++i) {
+    for (size_t i = 0; i < ARRAY_SIZE(longopts); ++i) {
         oc = getopt_long(ac, av, "t:p:P:", longopts, NULL);
         if (manage_argv(&target, &port, oc) == 84)
             return (84);
@@ -66,7 +66,7 @@ int main(int ac, char **av)
     infos_t infos_struct;
     const int i = 1;
 
-    if (handle_argument(&infos_struct, ac, av) == 84) {
+    if (ac != 7 || handle_argument(&infos_struct, ac, av) == 84) {
         fprintf(stderr, "Usage: [-t target] [-p port] [-P password]\n");
         return (84);
     }

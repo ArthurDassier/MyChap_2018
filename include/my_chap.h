@@ -24,6 +24,7 @@
 #define UDP_HEADER 8
 #define INET_HEADER 5
 #define DATA_SIZE 1024
+#define ARRAY_SIZE(array) sizeof(array) / sizeof(*array)
 
 typedef struct sockaddr_in sockaddr_in_t;
 typedef struct sockaddr sockaddr_t;
