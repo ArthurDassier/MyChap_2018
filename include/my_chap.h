@@ -56,7 +56,7 @@ int udp_client(infos_t);
 uint16_t check_sum(uint8_t *, int);
 int check_ip_port(char *, char *);
 
-// Miscellianous
+// Miscellaneous
 char **my_str_to_wordtab(char *, char);
 
 #endif /* !MY_CHAP_H_ */

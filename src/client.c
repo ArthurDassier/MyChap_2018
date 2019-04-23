@@ -28,8 +28,7 @@ static int init_udp(infos_t infos_struct, uint8_t *udp_packet)
     return (size);
 }
 
-static int init_ip(infos_t infos_struct, uint8_t *ip_packet,
-uint8_t *data, int data_size)
+static int init_ip(infos_t infos_struct, uint8_t *ip_packet, int data_size)
 {
     iphdr_t *iph = (iphdr_t *)ip_packet;
 
@@ -51,8 +50,7 @@ int udp_client(infos_t infos_struct)
 {
     uint8_t     packet[ETH_DATA_LEN] = {0};
     int         ip = init_udp(infos_struct, packet + sizeof(iphdr_t));
-    int         packet_size = init_ip(infos_struct, packet,
-                                        packet + sizeof(iphdr_t), ip);
+    int         packet_size = init_ip(infos_struct, packet, ip);
 
     if (sendto(infos_struct.sock, packet, packet_size, 0,
     (sockaddr_t *)&infos_struct.dst_addr, sizeof(infos_struct.dst_addr)) < 0) {
