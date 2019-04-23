@@ -15,17 +15,16 @@ static int init_udp(infos_t infos_struct, uint8_t *udp_packet)
     int                 data_size = strlen((char *)infos_struct.data);
     uint16_t            size = UDP_HEADER + data_size;
 
-    memcpy(udp_packet + UDP_HEADER, infos_struct.data, data_size);
     udph->source = infos_struct.src_addr.sin_port;
     udph->dest = infos_struct.dst_addr.sin_port;
     udph->len = htons(size);
-    udph->check = check_sum(pseudo_packet, sizeof(pseudo_header_t) + size);
-    memcpy(pseudo_packet + sizeof(pseudo_header_t), udph, size);
+    memcpy(udp_packet + UDP_HEADER, infos_struct.data, data_size);
     iph->source_address = infos_struct.src_addr.sin_addr.s_addr;
     iph->dest_address = infos_struct.dst_addr.sin_addr.s_addr;
     iph->udp_length = udph->len;
     iph->placeholder = 0;
     iph->protocol = IPPROTO_UDP;
+    udph->check = 0;
     return (size);
 }
 
@@ -45,7 +44,6 @@ uint8_t *data, int data_size)
     iph->ttl = 64;
     iph->tos = 0;
     iph->id = 0;
-    memcpy(ip_packet + sizeof(iphdr_t), data, data_size);
     return (sizeof(iphdr_t) + data_size);
 }
 
