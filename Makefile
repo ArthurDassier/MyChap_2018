@@ -15,8 +15,11 @@ CFLAGS	+=	-I./include
 
 NAME	=	client
 
-SRCS	=	src/main.c		\
-			src/client.c	\
+SRCS	=	src/main.c				\
+			src/client.c			\
+			src/utils.c				\
+			src/my_str_to_wordtab.c	\
+			src/check_ip_port.c		\
 
 OBJS	=	$(SRCS:.c=.o)
 
