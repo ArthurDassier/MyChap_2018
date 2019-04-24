@@ -19,7 +19,7 @@ static void init_struct(infos_t *infos_struct, char *target, char *port)
         inet_aton("127.0.0.1", &infos_struct->dst_addr.sin_addr);
     else
         inet_aton(target, &infos_struct->dst_addr.sin_addr);
-    strcpy((char *)infos_struct->data, "hello client");
+    strcpy((char *)infos_struct->data, "client hello");
     free(target);
     free(port);
 }
@@ -77,5 +77,10 @@ int main(int ac, char **av)
         return (84);
     }
     setsockopt(infos_struct->sock, IPPROTO_IP, IP_HDRINCL, &i, sizeof(i));
-    return (udp_client(infos_struct));
+    if (udp_client(infos_struct) == 84)
+        return (84);
+    return (0);
+    // char *boeuf = malloc(sizeof(100000));
+    // recv(infos_struct->sock, boeuf, 100, 0);
+    // printf(boeuf);
 }
