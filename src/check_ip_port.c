@@ -10,10 +10,8 @@
 static int check_ip_part(char *ip_part)
 {
     for (size_t i = 0; ip_part[i] != '\0'; ++i) {
-        if (!isdigit(ip_part[i])) {
-            fprintf(stderr, "Bad ip\n");
+        if (!isdigit(ip_part[i]))
             return (84);
-        }
     }
     return (0);
 }
@@ -24,21 +22,18 @@ static int check_ip(char *target)
     size_t  i = 0;
 
     for (i = 0; tab[i] != NULL; ++i) {
-        if (strlen(tab[i]) == 0) {
-            fprintf(stderr, "Bad ip\n");
+        if (strlen(tab[i]) == 0)
             return (84);
-        }
         if (check_ip_part(tab[i]) == 84)
             return (84);
-        if (atoi(tab[i]) > 255) {
-            fprintf(stderr, "Bad ip\n");
+        if (atoi(tab[i]) > 255)
             return (84);
-        }
     }
-    if (i != 4) {
-        fprintf(stderr, "Bad ip\n");
+    if (i != 4)
         return (84);
-    }
+    for (i = 0; tab[i] != NULL; ++i)
+        free(tab[i]);
+    free(tab);
     return (0);
 }
 
@@ -54,5 +49,9 @@ int check_ip_port(char *target, char *port)
         fprintf(stderr, "Bad port\n");
         return (84);
     }
-    return (check_ip(target));
+    if (check_ip(target) == 84) {
+        fprintf(stderr, "No such hostname: '%s'\n", target);
+        return (84);
+    }
+    return (0);
 }

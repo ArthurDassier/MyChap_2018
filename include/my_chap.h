@@ -50,13 +50,12 @@ typedef struct s_infos
 }              infos_t;
 
 // Init
-int udp_client(infos_t);
+int udp_client(infos_t *);
 
 // Utils
-uint16_t check_sum(uint8_t *, int);
-int check_ip_port(char *, char *);
 
 // Miscellaneous
+int check_ip_port(char *, char *);
 char **my_str_to_wordtab(char *, char);
 
 #endif /* !MY_CHAP_H_ */
