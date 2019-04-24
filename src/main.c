@@ -15,7 +15,10 @@ static void init_struct(infos_t *infos_struct, char *target, char *port)
     inet_aton("192.168.0.1", &infos_struct->src_addr.sin_addr);
     infos_struct->dst_addr.sin_family = AF_INET;
     infos_struct->dst_addr.sin_port = htons(atoi(port));
-    inet_aton(target, &infos_struct->dst_addr.sin_addr);
+    if (strcmp(target, "localhost") == 0)
+        inet_aton("127.0.0.1", &infos_struct->dst_addr.sin_addr);
+    else
+        inet_aton(target, &infos_struct->dst_addr.sin_addr);
     strcpy((char *)infos_struct->data, "hello client");
     free(target);
     free(port);

@@ -50,6 +50,8 @@ int check_ip_port(char *target, char *port)
         return (84);
     }
     if (check_ip(target) == 84) {
+        if (strcmp(target, "localhost") == 0)
+            return (0);
         fprintf(stderr, "No such hostname: '%s'\n", target);
         return (84);
     }
