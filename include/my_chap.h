@@ -24,6 +24,7 @@
 #define UDP_HEADER 8
 #define INET_HEADER 5
 #define DATA_SIZE 1024
+#define PKT_MAX_SIZE 1024
 #define ARRAY_SIZE(array) sizeof(array) / sizeof(*array)
 
 typedef struct sockaddr_in sockaddr_in_t;
@@ -31,6 +32,14 @@ typedef struct sockaddr sockaddr_t;
 typedef struct udphdr udphdr_t;
 typedef struct iphdr iphdr_t;
 typedef int int_socket;
+
+typedef struct
+{
+    iphdr_t ip;
+    udphdr_t udp;
+    char data [4096];
+} header_t;
+
 
 typedef struct s_pseudo_header
 {

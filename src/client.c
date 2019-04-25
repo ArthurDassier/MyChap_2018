@@ -46,7 +46,7 @@ static int init_ip(infos_t *infos_struct, uint8_t *ip_packet, int data_size)
     iph->frag_off = 0;
     iph->version = 4;
     iph->check = 0;
-    iph->ttl = 64;
+    iph->ttl = 5;
     iph->tos = 0;
     iph->id = 0;
     return (sizeof(iphdr_t) + data_size);
@@ -63,6 +63,5 @@ int udp_client(infos_t *infos_s)
         fprintf(stderr, "Sendto failed\n");
         return (84);
     }
-    free(infos_s);
     return (0);
 }

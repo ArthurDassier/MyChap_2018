@@ -12,7 +12,7 @@ static void init_struct(infos_t *infos_struct, char *target, char *port)
 {
     infos_struct->src_addr.sin_family = AF_INET;
     infos_struct->src_addr.sin_port = htons(2048);
-    inet_aton("192.168.0.1", &infos_struct->src_addr.sin_addr);
+    inet_aton("127.0.0.1", &infos_struct->src_addr.sin_addr);
     infos_struct->dst_addr.sin_family = AF_INET;
     infos_struct->dst_addr.sin_port = htons(atoi(port));
     if (strcmp(target, "localhost") == 0)
@@ -80,7 +80,4 @@ int main(int ac, char **av)
     if (udp_client(infos_struct) == 84)
         return (84);
     return (0);
-    // char *boeuf = malloc(sizeof(100000));
-    // recv(infos_struct->sock, boeuf, 100, 0);
-    // printf(boeuf);
 }
