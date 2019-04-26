@@ -19,13 +19,14 @@ SRCS	=	src/main.c				\
 			src/client.c			\
 			src/my_str_to_wordtab.c	\
 			src/check_ip_port.c		\
+			src/sha.c
 
 OBJS	=	$(SRCS:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(OBJS) -o $(NAME)
+	$(CC) $(OBJS) -o $(NAME) -lssl -lcrypto
 
 clean:
 	$(RM) $(OBJS)

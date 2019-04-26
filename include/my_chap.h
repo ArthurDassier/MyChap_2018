@@ -37,9 +37,8 @@ typedef struct
 {
     iphdr_t ip;
     udphdr_t udp;
-    char data [4096];
+    char data[4096];
 } header_t;
-
 
 typedef struct s_pseudo_header
 {
@@ -62,6 +61,8 @@ typedef struct s_infos
 int udp_client(infos_t *);
 
 // Utils
+int degeu(infos_t *, char *);
+void init_struct(infos_t *, char *, char *, char *);
 
 // Miscellaneous
 int check_ip_port(char *, char *);
