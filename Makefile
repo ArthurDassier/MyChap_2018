@@ -19,7 +19,8 @@ SRCS	=	src/main.c				\
 			src/client.c			\
 			src/my_str_to_wordtab.c	\
 			src/check_ip_port.c		\
-			src/sha.c
+			src/init.c				\
+			src/sha.c				\
 
 OBJS	=	$(SRCS:.c=.o)
 

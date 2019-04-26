@@ -47,32 +47,30 @@ typedef struct
     char *password;
 } connect_t;
 
-typedef struct s_pseudo_header
+typedef struct
 {
     u_int32_t  source_address;
     u_int32_t  dest_address;
     u_int16_t  udp_length;
     u_int8_t   placeholder;
     u_int8_t   protocol;
-}              pseudo_header_t;
+} pseudo_header_t;
 
-typedef struct s_infos
+typedef struct
 {
     sockaddr_in_t   src_addr;
     sockaddr_in_t   dst_addr;
     uint8_t         data[DATA_SIZE];
     int_socket      sock;
-}              infos_t;
+} infos_t;
 
 // Init
 int udp_client(infos_t *);
-
-// Utils
-int degeu(infos_t *, connect_t *);
 void init_struct(infos_t *, connect_t *, char *);
 
 // Miscellaneous
 int check_ip_port(char *, char *);
 char **my_str_to_wordtab(char *, char);
+int handle_server_answer(infos_t *, connect_t *);
 
 #endif /* !MY_CHAP_H_ */

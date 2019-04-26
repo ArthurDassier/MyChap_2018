@@ -8,12 +8,12 @@
 #include <openssl/sha.h>
 #include "my_chap.h"
 
-int sha(infos_t *infos_struct, connect_t *connection, char *holder)
+static int secret(infos_t *infos_struct, connect_t *connection, char *holder)
 {
-    header_t sct;
-    SHA256_CTX sha256;
-    unsigned char hash[SHA256_DIGEST_LENGTH];
-    socklen_t size = sizeof(infos_struct->dst_addr);
+    socklen_t       size = sizeof(infos_struct->dst_addr);
+    unsigned char   hash[SHA256_DIGEST_LENGTH];
+    header_t        sct;
+    SHA256_CTX      sha256;
 
     SHA256_Init(&sha256);
     SHA256_Update(&sha256, holder, strlen(holder));
@@ -30,23 +30,23 @@ int sha(infos_t *infos_struct, connect_t *connection, char *holder)
     return (0);
 }
 
-int degeu(infos_t *infos_struct, connect_t *connection)
+int handle_server_answer(infos_t *infos_struct, connect_t *connection)
 {
-    header_t resp;
-    char *holder = NULL;
-    socklen_t size = sizeof(infos_struct->dst_addr);
+    socklen_t   size = sizeof(infos_struct->dst_addr);
+    char        *holder = NULL;
+    header_t    response;
 
-    recvfrom(infos_struct->sock, &resp, sizeof(header_t), 0,
+    recvfrom(infos_struct->sock, &response, sizeof(header_t), 0,
     (struct sockaddr *)&infos_struct->dst_addr, &size);
-    memset(resp.data, 0, 4096);
-    recvfrom(infos_struct->sock, &resp, sizeof(header_t), 0,
+    memset(response.data, 0, 4096);
+    recvfrom(infos_struct->sock, &response, sizeof(header_t), 0,
     (struct sockaddr *)&infos_struct->dst_addr, &size);
     holder = malloc(sizeof(char) * (strlen(connection->password)
-    + strlen(resp.data) + 1));
+    + strlen(response.data) + 1));
     holder[0] = '\0';
-    strcat(holder, resp.data);
+    strcat(holder, response.data);
     strcat(holder, connection->password);
-    sha(infos_struct, connection, holder);
+    secret(infos_struct, connection, holder);
     free(holder);
     return (0);
 }
