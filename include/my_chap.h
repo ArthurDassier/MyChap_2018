@@ -40,6 +40,13 @@ typedef struct
     char data[4096];
 } header_t;
 
+typedef struct
+{
+    char *target;
+    char *port;
+    char *password;
+} connect_t;
+
 typedef struct s_pseudo_header
 {
     u_int32_t  source_address;
@@ -61,8 +68,8 @@ typedef struct s_infos
 int udp_client(infos_t *);
 
 // Utils
-int degeu(infos_t *, char *);
-void init_struct(infos_t *, char *, char *, char *);
+int degeu(infos_t *, connect_t *);
+void init_struct(infos_t *, connect_t *, char *);
 
 // Miscellaneous
 int check_ip_port(char *, char *);
