@@ -5,7 +5,7 @@
 ## a_makefile_for_projetcs
 ##
 
-CC		=	gcc -g3
+CC		=	gcc
 
 RM		=	rm -rf
 
@@ -20,7 +20,7 @@ SRCS	=	src/main.c				\
 			src/my_str_to_wordtab.c	\
 			src/check_ip_port.c		\
 			src/init.c				\
-			src/sha.c				\
+			src/answer.c			\
 
 OBJS	=	$(SRCS:.c=.o)
 
