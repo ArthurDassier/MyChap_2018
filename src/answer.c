@@ -16,7 +16,7 @@ static header_t check_port(infos_t *infos_struct, connect_t *connection)
 
     recvfrom(infos_struct->sock, &response, sizeof(header_t), 0,
     (struct sockaddr *)&infos_struct->dst_addr, &size);
-    while (response.udp.uh_sport != htons(atoi(connection->port)) && i < 10) {
+    while (response.udp.uh_sport != htons(atoi(connection->port)) && i < 20) {
         recvfrom(infos_struct->sock, &response, sizeof(header_t), 0,
         (struct sockaddr *)&infos_struct->dst_addr, &size);
         memset(response.data, 0, 4096);
