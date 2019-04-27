@@ -8,6 +8,22 @@
 #include <openssl/sha.h>
 #include "my_chap.h"
 
+static header_t check_port(infos_t *infos_struct, connect_t *connection)
+{
+    socklen_t   size = sizeof(infos_struct->dst_addr);
+    header_t    response;
+
+    recvfrom(infos_struct->sock, &response, sizeof(header_t), 0,
+    (struct sockaddr *)&infos_struct->dst_addr, &size);
+    if (response.udp.uh_sport != htons(atoi(connection->port))) {
+        while (response.udp.uh_sport != htons(atoi(connection->port))) {
+            recvfrom(infos_struct->sock, &response, sizeof(header_t), 0,
+            (struct sockaddr *)&infos_struct->dst_addr, &size);
+        }
+    }
+    return (response);
+}
+
 static int secret(infos_t *infos_struct, connect_t *connection, char *holder)
 {
     socklen_t       size = sizeof(infos_struct->dst_addr);
@@ -24,8 +40,7 @@ static int secret(infos_t *infos_struct, connect_t *connection, char *holder)
     recvfrom(infos_struct->sock, &sct, sizeof(header_t), 0,
     (struct sockaddr *)&infos_struct->dst_addr, &size);
     memset(sct.data, 0, 4096);
-    recvfrom(infos_struct->sock, &sct, sizeof(header_t), 0,
-    (struct sockaddr *)&infos_struct->dst_addr, &size);
+    sct = check_port(infos_struct, connection);
     printf(strcmp(sct.data, "KO") == 0 ? "%s\n" : "Secret: '%s'\n", sct.data);
     return (0);
 }
@@ -39,8 +54,7 @@ int handle_server_answer(infos_t *infos_struct, connect_t *connection)
     recvfrom(infos_struct->sock, &response, sizeof(header_t), 0,
     (struct sockaddr *)&infos_struct->dst_addr, &size);
     memset(response.data, 0, 4096);
-    recvfrom(infos_struct->sock, &response, sizeof(header_t), 0,
-    (struct sockaddr *)&infos_struct->dst_addr, &size);
+    response = check_port(infos_struct, connection);
     holder = malloc(sizeof(char) * (strlen(connection->password)
     + strlen(response.data) + 1));
     holder[0] = '\0';
