@@ -19,7 +19,6 @@ static header_t check_port(infos_t *infos_struct, connect_t *connection)
     while (response.udp.uh_sport != htons(atoi(connection->port)) && i < 20) {
         recvfrom(infos_struct->sock, &response, sizeof(header_t), 0,
         (struct sockaddr *)&infos_struct->dst_addr, &size);
-        memset(response.data, 0, 4096);
         ++i;
     }
     return (response);
@@ -40,7 +39,6 @@ static int secret(infos_t *infos_struct, connect_t *connection, char *holder)
         return (84);
     recvfrom(infos_struct->sock, &sct, sizeof(header_t), 0,
     (struct sockaddr *)&infos_struct->dst_addr, &size);
-    memset(sct.data, 0, 4096);
     sct = check_port(infos_struct, connection);
     printf(strcmp(sct.data, "KO") == 0 ? "KO\n" : "Secret: '%s'\n", sct.data);
     return (0);
@@ -54,7 +52,6 @@ int handle_server_answer(infos_t *infos_struct, connect_t *connection)
 
     recvfrom(infos_struct->sock, &response, sizeof(header_t), 0,
     (struct sockaddr *)&infos_struct->dst_addr, &size);
-    memset(response.data, 0, 4096);
     response = check_port(infos_struct, connection);
     holder = malloc(sizeof(char) * (strlen(connection->password)
     + strlen(response.data) + 1));
