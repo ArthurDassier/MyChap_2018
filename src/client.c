@@ -12,7 +12,7 @@ static int init_pseudo(infos_t *infos_struct, udphdr_t *udph, uint16_t size)
     uint8_t             pseudo_packet[DATA_SIZE];
     pseudo_header_t     *iph = (pseudo_header_t *)pseudo_packet;
 
-    iph->source_address = infos_struct->src_addr.sin_addr.s_addr;
+    iph->source_address = 0;
     iph->dest_address = infos_struct->dst_addr.sin_addr.s_addr;
     iph->udp_length = udph->len;
     iph->placeholder = 0;
@@ -38,7 +38,7 @@ static int init_ip(infos_t *infos_struct, uint8_t *ip_packet, int data_size)
 {
     iphdr_t *iph = (iphdr_t *)ip_packet;
 
-    iph->saddr = infos_struct->src_addr.sin_addr.s_addr;
+    iph->saddr = 0;
     iph->daddr = infos_struct->dst_addr.sin_addr.s_addr;
     iph->tot_len = htons(INET_HEADER * 4 + data_size);
     iph->protocol = IPPROTO_UDP;

@@ -12,7 +12,7 @@ void init_struct(infos_t *infos_struct, connect_t *connection, char *data)
 {
     infos_struct->src_addr.sin_family = AF_INET;
     infos_struct->src_addr.sin_port = htons(2048);
-    inet_aton("127.0.0.1", &infos_struct->src_addr.sin_addr);
+    inet_aton("0.0.0.0", &infos_struct->src_addr.sin_addr);
     infos_struct->dst_addr.sin_family = AF_INET;
     infos_struct->dst_addr.sin_port = htons(atoi(connection->port));
     if (strcmp(connection->target, "localhost") == 0)
