@@ -42,7 +42,7 @@ static int secret(infos_t *infos_struct, connect_t *connection, char *holder)
     (struct sockaddr *)&infos_struct->dst_addr, &size);
     memset(sct.data, 0, 4096);
     sct = check_port(infos_struct, connection);
-    printf(strcmp(sct.data, "KO") == 0 ? "%s\n" : "Secret: '%s'\n", sct.data);
+    printf(strcmp(sct.data, "KO") == 0 ? "KO\n" : "Secret: '%s'\n", sct.data);
     return (0);
 }
 

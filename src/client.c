@@ -7,19 +7,6 @@
 
 #include "my_chap.h"
 
-static int init_pseudo(infos_t *infos_struct, udphdr_t *udph, uint16_t size)
-{
-    uint8_t             pseudo_packet[DATA_SIZE];
-    pseudo_header_t     *iph = (pseudo_header_t *)pseudo_packet;
-
-    iph->source_address = 0;
-    iph->dest_address = infos_struct->dst_addr.sin_addr.s_addr;
-    iph->udp_length = udph->len;
-    iph->placeholder = 0;
-    iph->protocol = IPPROTO_UDP;
-    return (size);
-}
-
 static int init_udp(infos_t *infos_struct, uint8_t *udp_packet)
 {
     udphdr_t    *udph = (udphdr_t *)udp_packet;
@@ -31,7 +18,7 @@ static int init_udp(infos_t *infos_struct, uint8_t *udp_packet)
     udph->len = htons(size);
     udph->check = 0;
     memcpy(udp_packet + UDP_HEADER, infos_struct->data, data_size);
-    return (init_pseudo(infos_struct, udph, size));
+    return (size);
 }
 
 static int init_ip(infos_t *infos_struct, uint8_t *ip_packet, int data_size)
